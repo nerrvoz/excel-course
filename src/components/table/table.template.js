@@ -25,8 +25,12 @@ function createColumn(char, index) {
     `;
 }
 
-function createCell(_, index) {
-  return `<div class="cell" contenteditable="true" data-col="${index}"></div>`;
+function createCell(row) {
+  return function(_, col) {
+    return `
+      <div class="cell" contenteditable="true" data-col="${col}" data-id="${row}:${col}" data-type="cell"></div>
+    `;
+  };
 }
 
 function toChar(_, index) {
@@ -39,9 +43,9 @@ export function createTable(rowsCount = 15) {
   const cols = new Array(colsCount).fill('').map(toChar).map(createColumn).join('');
   rows.push(createRow(null, cols));
 
-  for (let i = 1; i <= rowsCount; i++) {
-    const cells = new Array(colsCount).fill('').map(createCell).join('');
-    rows.push(createRow(i, cells));
+  for (let row = 0; row <= rowsCount; row++) {
+    const cells = new Array(colsCount).fill('').map(createCell(row)).join('');
+    rows.push(createRow(row + 1, cells));
   }
 
   return rows.join('');
