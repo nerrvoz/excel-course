@@ -29,3 +29,26 @@ export function isEqual(arg1, arg2) {
 
   return arg1 === arg2;
 }
+
+export function camelCaseToDash( myStr ) {
+  return myStr.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
+}
+
+export function toInlineStyles(styles = {}) {
+  return Object.keys(styles).map((key) => {
+    return `${camelCaseToDash(key)}: ${styles[key]}`;
+  }).join(';');
+}
+
+export function debounce(fn, ms) {
+  let timeout;
+
+  return function(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      fn(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, ms);
+  };
+}
