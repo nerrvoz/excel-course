@@ -12,6 +12,11 @@ class Dom {
     return this.$element.outerHTML.trim();
   }
 
+  clear() {
+    this.html('');
+    return this;
+  }
+
   text(text) {
     if (typeof text !== 'undefined') {
       this.$element.textContent = text;
@@ -23,11 +28,6 @@ class Dom {
     }
 
     return this.$element.textContent.trim();
-  }
-
-  clear() {
-    this.html('');
-    return this;
   }
 
   on(eventType, callback) {
